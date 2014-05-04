@@ -1,0 +1,63 @@
+
+oracle字段 Hibernate映射类型 java类型
+number big_decimal java.math.BigDecimal
+number(1) boolean Boolean
+number(2)2至4之间 byte Byte
+number(8)4至8之间 integer Integer
+numbernumber(10)8以上 long Long 
+
+1).Java基本类型的Hibernate映射类型
+Java类型					Hibernate映射类型 		标准SQL类型 			大小和取值范围
+int/Integer				int/integer			INTEGER				4Byte
+long/Long				long				BIGINT				8Byte
+short/Short				short				SAMLLINT			2Byte
+byte/Byte				byte				TINYINT				1Byte
+float/Float				float				FLOAT				4Byte
+double/Double			double				DOUBLE				8Byte
+BigDecimal				big_decimal			NUMBERIC			Numeric(8,2)
+char/Character/String 	character			CHAR(1)				定长字符
+String					string				VARCHAR				变长字符
+boolean/Boolean			boolean				BIT					布尔类型
+boolean/Boolean			yes/no				CHAR(1)('Y'/'N')	布尔类型
+boolean/Boolean			true/false			CHAR(1)('T'/'F')	布尔类型
+
+2). Java时间和日期类型的Hibernate映射类型
+Java类型 	Hibernate映射类型 	标准SQL类型 	描述
+java.util.Date/java.sql.Date 	date 	DATE 	日期，yyyy-mm-dd
+java.util.Date/java.sql.TIme 	time 	TIME 	时间，hh：mm：ss
+java.util.Date/java.sql.Timestamp 	timestamp 	TIMESTAMP 	时间戳，yyyymmddhhmmss
+java.util.Calendar 	calendar 	TIMESTAMP 	同上
+java.util.Calendar 	calendar_date 	DATE 	日期，yyyy-mm-dd
+
+3). Java 大对象类型的Hibernate映射类型
+Java类型 			Hibernate映射类型 			标准SQL类型 			MySql类型 		Oracle类型
+byte[] 			binary					VARBINARY/BLOB		BLOB		BLOB
+String			text					CLOB				TEXT		CLOB
+serializable	serializable接口java类 	VARBINARY/BLOB 	BLOB 	BLOB
+java.sql.Clob	clob					CLOB				TEXT		CLOB
+java.sql.Blob	blob					BLOB				BLOB		BLOB
+
+
+
+
+
+Java Class Attribute Type         Hibernate Type               Possible SQL Type-Vendor Specific
+Integer, int, long short          integer, long, short         Appropriate SQL type
+char                              character                    char
+java.math.BigDecimal              big_decimal                  NUMERIC, NUMBER
+float, double                     float, double                float, double
+java.lang.Boolean, boolean        boolean, yes_no,             boolean, int
+                                  true_false
+java.lang.string                  string                       varchar, varchar2
+Very long strings                 text                         CLOB, TEXT
+java.util.Date                    date, time, timestamp        DATE, TIME, TIMESTAMP
+java.util.Calendar                calendar, calendar_date      TIMESTAMP, DATE
+java.util.Locale                  locale                       varchar,varchar2
+java.util.TimeZone                timezone                     varchar, varchar2
+java.util Currency                Currency                     varchar, varchar2
+java.sql.Clob                     clob                         CLOB
+java.sql.Blob                     blob                         BLOB
+Java object                       serializable                 binary field
+byte array                        binary                       binary field
+java.lang.Class                   class                        varchar, varchar2
+

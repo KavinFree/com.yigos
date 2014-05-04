@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:mvc="http://www.springframework.org/schema/mvc" 
+xmlns:util="http://www.springframework.org/schema/util" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xmlns:yigosmvc="http://www.yigos.com/schema/yigosmvc"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd 
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+http://www.yigos.com/schema/yigosmvc http://www.yigos.com/schema/yigosmvc/yigos-mvc.xsd">
+<yigosmvc:annotation-driven base-package="com.yigos" />
+<!-- 其他註解掃描交由applicationContext.xml處理 -->
+<context:component-scan base-package="com.yigos.**.controller" use-default-filters="true"
+	name-generator="com.yigos.framework.context.annotation.YigosAnnotationBeanNameGenerator">
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+</context:component-scan>
+
+<!--开启mvc注解
+<mvc:annotation-driven />
+-->
+<mvc:default-servlet-handler />
+
+<!-- 拦截器鏈  -->
+<mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/**" />
+        <bean class="com.yigos.framework.adapter.ManagerHandlerInterceptorAdapter" />
+    </mvc:interceptor>
+</mvc:interceptors>
+   
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+    <property name="prefix" value="/WEB-INF/pages/" />
+    <property name="suffix" value=".jsp" />
+</bean>
+<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <property name="contentNegotiationManager">
+        <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    	<!--设置为true以忽略对Accpect Header的支持（浏览器不同有可能不同）-->
+            <property name="ignoreAcceptHeader" value="true" />
+            <property name="defaultContentType" value="text/html" />
+            <property name="favorPathExtension" value="false" />
+			<property name="favorParameter" value="true" />
+            <property name="mediaTypes">
+                <map>
+                    <entry key="html" value="text/html" />
+                    <entry key="json" value="application/json" />
+                    <!--
+                    <entry key="xml"  value="application/xml" />
+                    <entry key="atom" value="application/atom+xml" />
+                    -->
+                </map>
+            </property>
+        </bean>
+    </property>
+    <property name="viewResolvers">
+        <list>
+        	<ref bean="internalResourceViewResolver" />
+        </list>
+    </property>
+    <property name="defaultViews">
+        <list>
+            <bean class="com.yigos.framework.model.JsonView">
+                <property name="encoding">
+                    <value type="org.codehaus.jackson.JsonEncoding">UTF8</value>
+                </property>
+                <property name="contentType" value="application/json;charset=UTF-8" />
+            </bean>
+        </list>
+    </property>
+</bean>
+<import resource="classpath:spring/servlet-other.xml" />
+<import resource="classpath:datasource/aopConfig.xml" />
+</beans>
