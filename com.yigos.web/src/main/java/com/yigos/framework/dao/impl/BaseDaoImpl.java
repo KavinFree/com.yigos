@@ -77,7 +77,12 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public List<?> findByJpql(final String jpql,
 			final Map<String, Object> condition, final Class<?> clazz) {
-		Query query = manager.createQuery(jpql, clazz);
+		Query query = null;
+		if(clazz!=null){
+			query = manager.createQuery(jpql, clazz);
+		}else{
+			query = manager.createQuery(jpql);
+		}
 		if (MapUtils.isNotEmpty(condition)) {
 			for (String key : condition.keySet()) {
 				Object value = condition.get(key);
@@ -90,7 +95,12 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public List<?> findBySql(final String sql,
 			final Map<String, Object> condition, final Class<?> clazz) {
-		Query query = manager.createNativeQuery(sql, clazz);
+		Query query = null;
+		if(clazz!=null){
+			query = manager.createNativeQuery(sql, clazz);
+		}else{
+			query = manager.createNativeQuery(sql);
+		}
 		if (MapUtils.isNotEmpty(condition)) {
 			for (String key : condition.keySet()) {
 				Object value = condition.get(key);

@@ -16,4 +16,5 @@ public class SystemController extends BaseController{
 	public String index() throws Exception{
 		return super.pagePath("workspace.system.index");
 	}
+	
 }

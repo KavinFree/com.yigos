@@ -33,12 +33,13 @@ http://www.yigos.com/schema/yigosmvc http://www.yigos.com/schema/yigosmvc/yigos-
     </mvc:interceptor>
 </mvc:interceptors>
    
-    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
     <property name="prefix" value="/WEB-INF/pages/" />
     <property name="suffix" value=".jsp" />
 </bean>
 <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <!-- <property name="order" value="1" /> -->
     <property name="contentNegotiationManager">
         <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 	    	<!--设置为true以忽略对Accpect Header的支持（浏览器不同有可能不同）-->
@@ -50,8 +51,9 @@ http://www.yigos.com/schema/yigosmvc http://www.yigos.com/schema/yigosmvc/yigos-
                 <map>
                     <entry key="html" value="text/html" />
                     <entry key="json" value="application/json" />
-                    <!--
                     <entry key="xml"  value="application/xml" />
+                    <entry key="pdf" value="application/pdf" />
+                    <!--
                     <entry key="atom" value="application/atom+xml" />
                     -->
                 </map>
@@ -65,12 +67,25 @@ http://www.yigos.com/schema/yigosmvc http://www.yigos.com/schema/yigosmvc/yigos-
     </property>
     <property name="defaultViews">
         <list>
-            <bean class="com.yigos.framework.model.JsonView">
+            <bean id="jsonView" class="com.yigos.framework.model.JsonView">
                 <property name="encoding">
                     <value type="org.codehaus.jackson.JsonEncoding">UTF8</value>
                 </property>
                 <property name="contentType" value="application/json;charset=UTF-8" />
             </bean>
+            <!--  XML view -->  
+			<bean id="xmlView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+				<constructor-arg>
+					<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+						<property name="packagesToScan"><value>com.yigos</value></property>
+					</bean>
+				</constructor-arg>
+				<property name="marshaller">
+					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+						<property name="autodetectAnnotations" value="true" />
+					</bean>
+			    </property>
+			</bean>
         </list>
     </property>
 </bean>

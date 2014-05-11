@@ -15,16 +15,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <name>com.yigos data maven</name>
 
 <dependencies>
-	<!-- <dependency>
-            <groupId>de.java2html</groupId>
-            <artifactId>java2html</artifactId>
-            <version>5.0</version>
-        </dependency>
-	<dependency>
-	    <groupId>org.apache.openjpa</groupId>
-	    <artifactId>openjpa-all</artifactId>
-	    <version>2.3.0</version>
-	</dependency> -->
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-entitymanager</artifactId>

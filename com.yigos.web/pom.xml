@@ -15,12 +15,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <name>com.yigos web maven</name>
 
 <dependencies>
-	<dependency>
+		<dependency>
+		    <groupId>com.thoughtworks.xstream</groupId>
+		    <artifactId>xstream</artifactId>
+		    <version>1.4.3</version>
+		</dependency>
+	<!-- <dependency>
 		<groupId>com.yigos</groupId>
 		<artifactId>sso-client</artifactId>
 		<version>1.1.0-RELEASE</version>
 		<type>jar</type>
-	</dependency>
+	</dependency> -->
 	<dependency>
 		<groupId>com.yigos</groupId>
 		<artifactId>commons</artifactId>
@@ -49,13 +54,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<systemPath>${libPath}/com.yigos.mvc-1.0.0-RELEASE.jar</systemPath>
 		-->
 	</dependency>
-	<!-- <dependency>
+	<dependency>
 		<groupId>com.yigos</groupId>
 		<artifactId>dojotoolkit</artifactId>
 		<version>1.1.0-RELEASE</version>
 		<type>war</type>
 		<scope>runtime</scope>
-	</dependency> -->
+	</dependency>
 	
 	<dependency>
 		<groupId>junit</groupId>
@@ -63,13 +68,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<version>4.11</version>
 		<scope>provided</scope>
 	</dependency>
-	<dependency>
+	<!-- <dependency>
 		<groupId>com.yigos</groupId>
 		<artifactId>ojdbc</artifactId>
 		<version>1.1</version>
 		<scope>system</scope>
 		<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath>
-	</dependency>
+	</dependency> -->
 </dependencies>
 
 <build>
