@@ -8,12 +8,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<version>1.0.0-RELEASE</version>
 		<relativePath>../com.yigos.major/pom.xml</relativePath>
 	</parent>
-	<artifactId>dojotoolkit</artifactId>
+	<artifactId>platform</artifactId>
 	<version>1.1.0-RELEASE</version>
 	<packaging>war</packaging>
-	<name>com.yigos dojotoolkit maven</name>
+	<name>com.yigos platform maven</name>
 
 	<build>
-		<finalName>com.yigos.dojotoolkit-${buildNumber}</finalName>
+		<finalName>com.yigos.platform-${buildNumber}</finalName>
 	</build>
 </project>

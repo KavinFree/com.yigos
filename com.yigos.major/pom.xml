@@ -76,7 +76,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	</dependency> -->
 </dependencies>
 <modules>
-	<module>../com.yigos.dojotoolkit</module>
+	<module>../com.yigos.platform</module>
 	<module>../com.yigos.spring</module>
 	<module>../com.yigos.data</module>
 	<module>../com.yigos.commons</module>
