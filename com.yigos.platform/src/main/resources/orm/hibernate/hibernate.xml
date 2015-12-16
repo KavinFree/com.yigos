@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xmlns:jee="http://www.springframework.org/schema/jee" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx.xsd 
+http://www.springframework.org/schema/jee  
+http://www.springframework.org/schema/jee/spring-jee.xsd"
+ default-autowire="byName">
+<!--
+<jee:jndi-lookup id="dataSource" jndi-name="dsatDataSource" resource-ref="true" />
+<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<property name="jndiName" value="${database.jndiName}" />
+</bean>
+-->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <property name="driverClass" value="${jdbc.driverClassName}" />
+    <property name="jdbcUrl" value="${jdbc.url}" />
+    <property name="user" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+    <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+    <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+</bean>
+
+<bean id="sessionFactory" 
+	class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource" />
+	<property name="packagesToScan" value="com.yigos.**.entity"/>
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hiberante.format_sql">true</prop>
+			<prop key="hibernate.use_sql_comments">true</prop>
+			<prop key="hibernate.max_fetch_depth">3</prop>
+			<prop key="hibernate.hibernate.use_outer_join">true</prop>
+			<prop key="hibernate.jdbc.batch_size">10</prop>
+			<prop key="hibernate.autocommit">false</prop>
+			<prop key="hibernate.current_session_context_class">
+				org.springframework.orm.hibernate4.SpringSessionContext
+			</prop>
+			<prop key="hibernate.cache.provider_class">
+	            org.hibernate.cache.EhCacheProvider
+	        </prop>
+	        <prop key="hibernate.cache.use_second_level_cache">true</prop>
+	        <prop key="hibernate.cache.use_query_cache">true</prop>
+	        <prop key="hibernate.cache.region.factory_class">
+	            org.hibernate.cache.ehcache.EhCacheRegionFactory
+	        </prop>
+		</props>
+	</property>
+	<!-- 
+	<property name="entityInterceptor">
+		<ref local="auditLogInterceptor" />
+	</property>
+	 -->
+</bean>
+
+<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+	<property name="cacheQueries"><value>true</value></property>
+</bean>
+
+<!-- 配置Hibernate事务管理器 -->
+<bean id="transactionManager"
+	class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:attributes>
+		<tx:method name="add*"    rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="insert*" rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="save*"   rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="modify*" rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="update*" rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="delete*" rollback-for="Exception" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="*"       read-only="true" propagation="NOT_SUPPORTED" />
+	</tx:attributes>
+</tx:advice>
+
+<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+<!--配置事务异常封装-->
+<bean id="persistenceExceptionTranslationPostProcessor" 
+	class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+</beans>

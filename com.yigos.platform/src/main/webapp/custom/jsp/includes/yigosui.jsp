@@ -1,0 +1,9 @@
+<script src="${libPath}/ckeditor/ckeditor.js"></script>
+<script src="${yigosuiPath}/form/editor/CKeditorField.js"></script>
+<script src="${yigosuiPath}/form/combo/ComboTreeField.js"></script>
+<script src="${yigosuiPath}/form/datetime/Ext.ux.form.NumberTextSpinnerField.js"></script>
+<script src="${yigosuiPath}/form/datetime/TimePickerField.js"></script>
+<script src="${yigosuiPath}/form/datetime/DateTimePicker.js"></script>
+<script src="${yigosuiPath}/form/datetime/DateTimeMenu.js"></script>
+<script src="${yigosuiPath}/form/datetime/DateTimeField.js"></script>
+<script src="${yigosuiPath}/window/FormWindow.js"></script>

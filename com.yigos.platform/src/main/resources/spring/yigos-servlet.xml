@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:mvc="http://www.springframework.org/schema/mvc" 
+xmlns:yigosmvc="http://www.yigos.com/schema/yigosmvc"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+http://www.yigos.com/schema/yigosmvc http://www.yigos.com/schema/yigosmvc/yigos-mvc.xsd"
+ default-autowire="byName">
+<!--此配置会导致无法启用异步-->
+<context:component-scan base-package="com.yigos" use-default-filters="false"
+	name-generator="com.yigos.framework.web.context.generator.YigosAnnotationBeanNameGenerator">
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+</context:component-scan>
+<yigosmvc:annotation-driven base-package="com.yigos" validator="validator">
+	<yigosmvc:async-support default-timeout="3000"/>
+</yigosmvc:annotation-driven>
+
+<mvc:default-servlet-handler />
+
+<!-- 拦截器鏈  -->
+<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:mapping path="/**"/>
+		<mvc:exclude-mapping path="/custom/**" />
+		<bean class="com.yigos.framework.adapter.YigosHandlerInterceptorAdapter" />
+	</mvc:interceptor>
+    <mvc:interceptor>
+        <mvc:mapping path="/workspace/system/**" />
+        <mvc:mapping path="/auth/**" />
+        <mvc:exclude-mapping path="/workspace/verify/login/**" />
+        <bean class="com.yigos.framework.adapter.ManagerHandlerInterceptorAdapter" />
+    </mvc:interceptor>
+</mvc:interceptors>
+
+<bean id="liteDeviceDelegatingViewResolver" 
+	class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
+	<constructor-arg>
+	   <ref bean="internalResourceViewResolver" />
+	</constructor-arg>
+	<property name="enableFallback" value="true" />
+	<!--<property name="normalPrefix" value="pc/" />-->
+	<property name="mobilePrefix" value="mobile/" />
+	<property name="tabletPrefix" value="tablet/" />
+</bean>
+<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="prefix" value="/WEB-INF/pages/" />
+	    <property name="suffix" value=".jsp" />
+	</bean>
+<bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+    <property name="viewNames" value=".ftl"/>
+    <property name="contentType" value="text/html; charset=utf-8"/>
+    <property name="cache" value="true" />
+    <property name="prefix" value="/WEB-INF/pages/" />
+    <property name="suffix" value=".ftl" />
+    <property name="order" value="2"/>
+</bean>
+<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <!-- <property name="order" value="1" /> -->
+    <property name="contentNegotiationManager">
+        <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    	<!--设置为true以忽略对Accpect Header的支持（浏览器不同有可能不同）-->
+            <property name="ignoreAcceptHeader" value="true" />
+            <property name="defaultContentType" value="text/html" />
+			<!--是否启用扩展名支持-->
+			<property name="favorPathExtension" value="true" />
+			<!--是否启用参数支持-->
+			<property name="favorParameter" value="true" />
+            <property name="mediaTypes">
+                <map>
+                    <entry key="html" value="text/html" />
+                    <entry key="json" value="application/json" />
+                    <entry key="plain" value="text/plain" />
+                    <entry key="xml"  value="application/xml" />
+                    <entry key="pdf" value="application/pdf" />
+                    <entry key="xls" value="application/vnd.ms-excel" />
+                </map>
+            </property>
+        </bean>
+    </property>
+    <property name="viewResolvers">
+        <list>
+        	<ref bean="liteDeviceDelegatingViewResolver" />
+        	<!--<ref bean="freeMarkerViewResolver" />-->
+        </list>
+    </property>
+    <property name="defaultViews">
+        <list>
+            <bean id="jsonView" class="com.yigos.framework.common.view.JsonView">
+            	<!-- <property name="extractValueFromSingleKeyModel" value="true" /> -->
+                <property name="encoding">
+                    <value type="com.fasterxml.jackson.core.JsonEncoding">UTF8</value>
+                </property>
+                <property name="contentType" value="application/json;charset=UTF-8" />
+                <property name="objectMapper">
+					<bean class="com.yigos.framework.common.util.ObjectMappingCustomer">
+						<property name="serializationInclusion">
+							<value type="com.fasterxml.jackson.annotation.JsonInclude$Include">ALWAYS</value>
+						</property>
+					</bean>
+				</property>
+            </bean>
+            <bean class="com.yigos.framework.common.view.PlainView"></bean>
+            <!--  XML view -->
+			<bean id="xmlView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+				<constructor-arg>
+					<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+						<property name="packagesToScan"><value>com.yigos</value></property>
+					</bean>
+				</constructor-arg>
+				<property name="marshaller">
+					<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+						<property name="autodetectAnnotations" value="true" />
+					</bean>
+			    </property>
+			</bean>
+        </list>
+    </property>
+</bean>
+<import resource="classpath:spring/servlet-other.xml" />
+<import resource="classpath:orm/aopConfig.xml" />
+
+</beans>

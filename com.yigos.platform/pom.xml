@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<parent>
+	<groupId>com.yigos</groupId>
+	<artifactId>com.yigos.major</artifactId>
+	<version>1.0.0-RELEASE</version>
+	<relativePath>../com.yigos.major/pom.xml</relativePath>
+</parent>
+<groupId>com.yigos</groupId>
+<artifactId>com.yigos.platform</artifactId>
+<version>1.1.0-RELEASE</version>
+<packaging>war</packaging>
+<name>com.yigos platform maven</name>
+<dependencies>
+	<dependency>
+		<groupId>com.yigos</groupId>
+		<artifactId>com.yigos.data</artifactId>
+		<version>1.1.0-RELEASE</version>
+		<type>jar</type>
+	</dependency>
+	<dependency>
+		<groupId>com.yigos</groupId>
+		<artifactId>com.yigos.mvc</artifactId>
+		<version>1.1.0-RELEASE</version>
+		<type>jar</type>
+	</dependency>
+</dependencies>
+
+<build>
+	<finalName>com.yigos.platform-${buildNumber}</finalName>
+	<defaultGoal>compile</defaultGoal>
+	<plugins>
+		<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>${server.jetty}</version>
+			<configuration>
+				<webAppConfig>
+					<contextPath>${server.path}</contextPath>
+					<!--
+                    <defaultsDescriptor>
+                    ${basedir}/../com.yigos.major/jetty-config/webdefault.xml
+                    </defaultsDescriptor>
+                    -->
+                </webAppConfig>
+                <!--
+                <contextXml>${basedir}/../com.yigos.major/jetty-config/jetty-context.xml</contextXml>
+                -->
+				<scanIntervalSeconds>100000</scanIntervalSeconds>
+				<connectors>
+					<!--
+					<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+						<port>${server.port}</port>
+					</connector>
+					-->
+					<!--bio连接不会把资源文件（html, css）锁定-->
+					<connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
+						<port>${server.port}</port>
+					</connector>
+				</connectors>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+</project>

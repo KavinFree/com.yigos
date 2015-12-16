@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/com.yigos.data" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.yigos.mvc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.yigos.platform" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

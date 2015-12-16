@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd"
+ default-autowire="byName">
+	<bean id="schedulerFactoryBean" 
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource">
+            <ref bean="mybatisDataSource"/>
+        </property>
+        <property name="configLocation" 
+    	value="classpath:task/bak/quartz.properties"/>
+    	<!-- 启动延迟120 秒 --> 
+    	<!-- <property name="startDelay" value="120000" /> -->
+		<!-- 任务执行的周期 30秒 -->
+		<!-- <property name="repeatInterval" value="30000" /> -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+	</bean>
+</beans>

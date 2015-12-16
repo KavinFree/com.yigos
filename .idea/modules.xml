@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.yigos.iml" filepath="$PROJECT_DIR$/com.yigos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.yigos.data/com.yigos.data.iml" filepath="$PROJECT_DIR$/com.yigos.data/com.yigos.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.yigos.mvc/com.yigos.mvc.iml" filepath="$PROJECT_DIR$/com.yigos.mvc/com.yigos.mvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.yigos.platform/com.yigos.platform.iml" filepath="$PROJECT_DIR$/com.yigos.platform/com.yigos.platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../golang/demo1/demo1.iml" filepath="$PROJECT_DIR$/../golang/demo1/demo1.iml" />
+    </modules>
+  </component>
+</project>

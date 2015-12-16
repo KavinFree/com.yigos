@@ -1,0 +1,8 @@
+ֻ��Ҫֱ�������ĸ�js�ļ� ������Ҫ����˳��ȥ����
+<script type="text/javascript" src="datetime/UX_TimePickerField.js"></script>
+<script type="text/javascript" src="datetime/UX_DateTimePicker.js"></script>
+<script type="text/javascript" src="datetime/UX_DateTimeMenu.js"></script>
+<script type="text/javascript" src="datetime/UX_DateTimeField.js"></script>
+
+
+Ȼ����Ҫ��ʱ���xtype ��Ϊdatetimefield

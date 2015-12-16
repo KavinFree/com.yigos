@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yigos.auth.entity.SysUser">
+<insert id="insertUser" parameterType="com.yigos.auth.user.view.SysUserView">
+        insert into sys_user (
+        <trim suffixOverrides=",">
+            <if test="id != null">ID,</if>
+            <if test="code != null">CODE,</if>
+            <if test="name != null">NAME</if>
+        </trim>
+        )
+        values (
+        <trim suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name}</if>
+        </trim>
+        )
+    </insert>
+
+</mapper>

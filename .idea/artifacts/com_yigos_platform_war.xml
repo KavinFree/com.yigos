@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="com.yigos.platform:war">
+    <output-path>$PROJECT_DIR$/com.yigos.platform/target</output-path>
+    <root id="archive" name="com.yigos.platform-${buildNumber}.war">
+      <element id="artifact" artifact-name="com.yigos.platform:war exploded" />
+    </root>
+  </artifact>
+</component>
